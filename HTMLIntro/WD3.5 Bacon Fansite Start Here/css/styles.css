@@ -1,0 +1,22 @@
+h1{
+    color: red;
+    font-size: 50px;
+}
+.bacon{
+    background-color: green;
+}
+.bacon:hover{
+    background-color: turquoise;
+}
+.broccoli{
+    background-color: red;
+}
+.broccoli:hover{
+    background-color: turquoise;
+}
+img{
+    height: 200px;
+}
+#heading{
+    color: blue;
+}
