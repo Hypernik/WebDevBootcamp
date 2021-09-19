@@ -1,20 +1,36 @@
 body{
     color: #F3D5C0;
-    
+    text-align: center;
     background-color: #506D84;
+    font-family: 'Merriweather', serif;
 }
 h1{
-    margin: 0;
+    margin-top: 0;
+    font-family: 'Sacramento', cursive;
 }
-div{
-    width: 200px;
-    height: 200px;
+h2{
+    font-family: 'Montserrat', sans-serif;
+}
+h3{
+    font-family: 'Montserrat', sans-serif;
 }
 .top-container{
-    background-color: #889EAF;
-    border: 10px solid black;
-    padding: 20px;
+    position: relative;
+    padding-top: 100px;
 }
+.top-cloud{
+    position: absolute;
+    right: 400px;
+    top: 50px;
+}
+.bottom-cloud{
+    position: absolute;
+    left: 400px;
+}
+.pro{
+    text-decoration: underline;
+}
+/*
 .middle-container{
     background-color: red;
     border: 20px solid black;
@@ -25,3 +41,4 @@ div{
     border: 10px solid white;
     margin-left: 500px;
 }
+*/
