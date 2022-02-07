@@ -23,7 +23,7 @@ mailchimp.setConfig({
 
 app.post("/", function (req,res) {
     const firstName = req.body.firstName;
-    const secondName = req.body.secondName;
+    const secondName = req.body.lastName;
     const email = req.body.email;
 
     const listId = "3eaf194c2d";
