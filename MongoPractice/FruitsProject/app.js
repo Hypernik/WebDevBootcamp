@@ -1,62 +1,127 @@
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+const mongoose = require("mongoose");
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
+main().catch(err => console.log(err));
+console.log("What is going on");
+async function main() {
+  await mongoose.connect('mongodb://localhost:27017/fruitsDB');
+};
+console.log('Connect');
+const fruitSchema = new mongoose.Schema({
+	name: {
+		type: String,
+		required: [true,'why no fucking name bitch!!']
+	},
+	rating: {
+		type: Number,
+		min: 1,
+		max: 10
+	},
+	review: String
+});
+const Fruit = mongoose.model("Fruit", fruitSchema);
 
-// Database Name
-const dbName = 'fruitsDB';
-
-// Create a new MongoClient
-const client = new MongoClient(url);
-
-// Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
-
-  const db = client.db(dbName);
-
-  findDocuments(db, function() {
-		client.close();
-	});
+var apple = new Fruit({
+	name:"Apple",
+	rating: 10,
+	review: "Great stuff"
 });
 
-const insertDocuments = function(db, callback) {
-  // Get the documents collection
-  const collection = db.collection('fruits');
-  // Insert some documents
-  collection.insertMany([
-    {
-			name:"Apple",
-			score: 8,
-			review: "Great stuff"
-		},{
-			name:"Oranges",
-			score: 6,
-			review: "kinda sour"
-		},{
-			name:"Banana",
-			score: 9,
-			review: "Noice"
-		}
-  ], function(err, result) {
-    assert.equal(err, null);
-    assert.equal(3, result.insertedCount);
-		assert.equal(3, Object.keys(result.insertedIds).length);
-		console.log("Inserted 3 documents into the collection");
-    callback(result);
-  });
-};
+// apple.save();
 
-const findDocuments = function(db, callback) {
-  // Get the documents collection
-  const collection = db.collection('fruits');
-  // Find some documents
-  collection.find({}).toArray(function(err, fruits) {
-    assert.equal(err, null);
-    console.log("Found the following records");
-    console.log(fruits)
-    callback(fruits);
-  });
-}
+var kiwi = new Fruit({
+	name:"kiwi",
+	rating: 10,
+	review: "Noice"
+});
+
+var banana = new Fruit({
+	name:"banana",
+	// rating: 9,
+	review: "Fantastic"
+});
+var lichee = new Fruit({
+	name:"lichee",
+	rating: 8,
+	review: "Juicy"
+});
+var orange = new Fruit({
+	name:"Orange",
+	rating: 10
+	// review: "Pulpy"
+});
+// Fruit.insertMany([kiwi, banana, lichee, apple, orange], function(err) {
+// 	if(err){
+// 		console.log(err);
+// 	}else{
+// 		console.log('sucess');
+// 	}
+// });
+
+Fruit.find(function (err, fruits) {
+	if(err){
+		 console.log(err);
+	}else{
+		// mongoose.connection.close();
+		fruits.forEach(function(fruit){
+			console.log(fruit.name);
+		});
+	}
+});
+
+// Fruit.updateOne({_id: "620d2ccc88c2e4c79eeaede5"}, {rating: 8}, function (err) {
+// 	if(err){
+// 		console.log(err);
+// 	}else{
+// 		console.log("Update Scuccesfull");
+// 	}
+// });
+
+// Fruit.updateOne({_id: "620d2ccc88c2e4c79eeaede7"}, {review: "Pulpy MMMM!"}, function (err) {
+// 	if(err){
+// 		console.log(err);
+// 	}else{
+// 		console.log("Update Scuccesfull");
+// 	}
+// });
+
+Fruit.deleteOne({name: "lichee"}, function (err) {
+	if(err){
+		console.log(err);
+	}else{
+		console.log("Delete successfull");
+	}
+})
+
+// mongoose.connection.close();
+
+Fruit.deleteMany({name: "Apple"}, function(err){
+	if (err) {
+		console.log(err);
+	} else {
+		console.log("Delete successfull");
+	}
+})
+
+const personSchema = new mongoose.Schema({
+	name: String,
+	age: Number,
+	favouriteFruit: fruitSchema
+});
+
+const Person = mongoose.model("Person", personSchema);
+
+const pineapple = new Fruit({
+	name: "Dragon fruit",
+	rating: 7,
+	review: "Fus roh dah"
+});
+
+pineapple.save();
+
+const person = new Person({
+	name: "Chrlotte",
+	age: 32,
+	favouriteFruit: pineapple
+});
+
+person.save();
