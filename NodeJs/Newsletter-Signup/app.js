@@ -17,7 +17,7 @@ app.get("/", function (req, res) {
 });
 
 mailchimp.setConfig({
-    apiKey: "e738f61374da543de2214ec277209315-us4",
+    apiKey: "YOUR API KEY",
     server: "us4"
 });
 
@@ -26,7 +26,7 @@ app.post("/", function (req,res) {
     const secondName = req.body.lastName;
     const email = req.body.email;
 
-    const listId = "3eaf194c2d";
+    const listId = "YOUR_LIST_ID";
 
     const subscribingUser = {
         firstName: firstName,
@@ -53,9 +53,3 @@ app.post("/", function (req,res) {
 app.post("/failure", function (req, res) {
     res.redirect("/");
 });
-
-//Api Key
-//e738f61374da543de2214ec277209315-us4
-
-//List Id
-//3eaf194c2d
